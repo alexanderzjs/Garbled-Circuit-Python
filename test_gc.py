@@ -6,13 +6,13 @@ from gc_utils.evaluator import *
 circuit_file = "./aes.txt"
 
 # Garbler's operation
-fix_key, delta, public_one_label, public_one_label_delta = garbler_init()
+delta, public_one_label, public_one_label_delta = garbler_init()
 num_of_ginput = 256
 num_of_einput = 128
 num_of_output = 128
 ginput = [1,1,1,1,0,1,1,0,0,1,0,0,0,1,0,1,0,1,0,1,0,0,0,1,1,1,1,1,1,1,0,0,1,1,0,1,0,1,1,0,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,1,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0,1,1,1,1,1,0,1,1,1,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,1,0,0,1,0,0, 0,1,1,0,0,1,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1,0,0,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1,0,0,0,1,0,1,1,0,0,1,1,0,0,1,1,0,0,0,1,1,0,1,1,0,0,1,0,0,0,0,1,1,0,1,1,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,1,1,0,1,1,1,0,0,1,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1,1,0,0,1,1]
 gginput_0, gginput_1, geinput_0, geinput_1 = generate_garbled_input(num_of_ginput, num_of_einput, delta)
-g_output, gtt = compute_garbled_circuit(circuit_file, ginput, gginput_0, gginput_1, geinput_0, public_one_label_delta, delta, fix_key)
+g_output, gtt = compute_garbled_circuit(circuit_file, ginput, gginput_0, gginput_1, geinput_0, public_one_label_delta, delta)
 
 # Evaluator Operation
 einput = [1,1,0,1,0,0,1,1,1,0,0,0,1,0,0,0,1,0,1,0,0,1,1,0,1,1,0,0,0,1,1,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,0,1,0,1,1,0,1,1,0,0,0,0,0,0,1,0,0,1,0,1,0,1,0,1,1,0,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1]
@@ -24,7 +24,7 @@ c, C = base_ot_receiver_1(num_of_einput, einput, A)
 e_0, e_1 = base_got_sender_2(num_of_einput, geinput_0, geinput_1, a, A, C, message_len_in_bytes)
 new_geinput = base_got_receiver_2(num_of_einput, einput, e_0, e_1, c, A, message_len_in_bytes)
 
-e_output = evaluate_garbled_circuit(circuit_file, gginput_0, new_geinput, public_one_label, delta, gtt, fix_key)
+e_output = evaluate_garbled_circuit(circuit_file, gginput_0, new_geinput, public_one_label, gtt)
 
 for i in range(num_of_output):
     if g_output[i] != e_output[i]:

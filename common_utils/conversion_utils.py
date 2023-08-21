@@ -79,10 +79,10 @@ def list_conversion(input: list, from_type: any, to_type: any) -> list:
             output.append(unicode_to_int(item))
         elif from_type == "bytes" and to_type == "int":
             output.append(bytes_to_int(item))
-        elif from_type == "hex" and to_type == "ec_point":
+        elif from_type == "hex" and to_type == "point2d":
             output.append(cast("PlainPoint2D", (hex_to_int(item[0]), hex_to_int(item[1]))))
-        elif from_type == "int" and to_type == "ec_point":
-            output.append(cast("PlainPoint2D", (item[0], item[1])))
+        elif from_type == "int" and to_type == "point2d":
+                output.append(cast("PlainPoint2D", (item[0], item[1])))
         else:
             raise Exception("Type not supported in list_conversion")
     return output

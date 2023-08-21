@@ -30,17 +30,16 @@ def add_points(a: list, b: list) -> list:
 def inv_point(a: list) -> list:
     if len(a) != 2:
         raise Exception("Point is invalid")
-    return [a[0], secp256k1.P - a[1]]
+    inv_a = cast("PlainPoint2D", (a[0], secp256k1.P - a[1]))
+    return [inv_a[0], inv_a[1]]
 
 def mul_point_number(a: list, b: int) -> list:
-    if b <= 0 or b >= secp256k1.N:
-        raise Exception("Number is invalid")
     if len(a) != 2:
         raise Exception("Point is invalid")
     A = cast("PlainPoint2D", (a[0], a[1]))
     C = secp256k1.multiply(A, b)
     return [C[0], C[1]]
-    
+
 def get_generator_point() -> list:
     return [secp256k1.G[0], secp256k1.G[1]]
 

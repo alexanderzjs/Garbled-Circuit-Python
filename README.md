@@ -13,10 +13,9 @@ Run it with Python and you can find that the XOR operation on all elements of th
 
 ### Garbler Side Code
 1. garbler.garbler_init(): Generate values shared between Garbler and Evaluator. It returns:
-    a. fix_key (bytes): Key used for encryption to produce same output on same input
-    b. delta (bytes): Free XOR label difference
-    c. public_one_label (bytes): Label for public value 1 (Used by Evaluator ONLY in INV/NOT gate)
-    d. public_one_label_delta (bytes): Label for public value 1 (Used by Garbler ONLY in INV/NOT gate)
+    a. delta (bytes): Free XOR label difference
+    b. public_one_label (bytes): Label for public value 1 (Used by Evaluator ONLY in INV/NOT gate)
+    c. public_one_label_delta (bytes): Label for public value 1 (Used by Garbler ONLY in INV/NOT gate)
 
 2. garbler.generate_garbled_input(): Generate labels for input wires of both Garbler and Evaluator. It returns:
     a. gginput ([[bytes, bytes], [bytes, bytes], ..., [bytes, bytes]]): Garbled Garbler input (i.e. labels for Garbler input)

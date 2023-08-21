@@ -14,7 +14,7 @@ def base_ot_sender_1(num_of_ot: int) -> Union[list, list]:
     return a, A
 
 def base_ot_receiver_1(num_of_ot: int, b: list, A_in: list) -> Union[list, list]:
-    A = list_conversion(A_in, "int", "ec_point")
+    A = list_conversion(A_in, "int", "point2d")
     c = list()
     C = list()
     for i in range(num_of_ot):
@@ -23,12 +23,13 @@ def base_ot_receiver_1(num_of_ot: int, b: list, A_in: list) -> Union[list, list]
         if b[i] == 1:
             current_C = add_points(current_C, A[i])
         c.append(current_c)
-        C.append([current_C[0], current_C[1]])
+        point3d = secp256k1.to_jacobian(current_C)
+        C.append([point3d[0], point3d[1], point3d[2]])
     return c, C
 
 def base_got_sender_2(num_of_ot: int, m_0: list, m_1: list, a: list, A_in: list, C_in: list, message_len_in_bytes: int) -> Union[list, list]:
-    A = list_conversion(A_in, "int", "ec_point")
-    C = list_conversion(C_in, "int", "ec_point")
+    A = list_conversion(A_in, "int", "point2d")
+    C = list_conversion(C_in, "int", "point2d")
     e_0 = list()
     e_1 = list()
     for i in range(num_of_ot):
@@ -41,7 +42,7 @@ def base_got_sender_2(num_of_ot: int, m_0: list, m_1: list, a: list, A_in: list,
     return e_0, e_1
 
 def base_got_receiver_2(num_of_ot: int, b: list, e_0: list, e_1: list, c: list, A_in: list, message_len_in_bytes: int) -> list:
-    A = list_conversion(A_in, "int", "ec_point")
+    A = list_conversion(A_in, "int", "point2d")
     m_b = list()
     for i in range(num_of_ot):
         temp_c_A = mul_point_number(A[i], c[i])

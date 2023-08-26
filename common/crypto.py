@@ -4,7 +4,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from py_ecc.secp256k1 import secp256k1
 from py_ecc.typing import PlainPoint2D
 from typing import cast
-from common_utils.conversion_utils import *
+from common.conversion import *
 
 def hash(input: bytes) -> bytes:
     digest = hashes.Hash(hashes.SHA256())
@@ -46,10 +46,12 @@ def get_generator_point() -> list:
 def get_encrypted_mask(password: list, byte_len: int) -> bytes:
     if byte_len % 16 != 0:
         raise Exception("Byte length error: " + str(byte_len))
-    plaintext = bytes()
-    for i in range(byte_len // 16):
-        plaintext += int_to_bytes(i, 16)
-    return encrypt(plaintext, hash(int_to_bytes(password[0], 16) + int_to_bytes(password[1], 16)), b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+    plaintext = int_to_bytes(0, byte_len)
+    x = int_to_bytes(password[0], 32)
+    y = int_to_bytes(password[1], 32)
+    key = hash(xor_bytes(x, y, 32))[0 : 16]
+    keyHex = bytes_to_hex(key)
+    return encrypt(plaintext, key, b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
 
 def get_random_blocks(counter: int, password: bytes, num_of_blocks: int) -> list:
     plaintext = bytes()

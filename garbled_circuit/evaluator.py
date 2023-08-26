@@ -1,5 +1,5 @@
-from common_utils.crypto_utils import and_bytes, xor_bytes, hash
-from gc_utils.circuit import load_circuit_from_file
+from common.crypto import and_bytes, xor_bytes, hash
+from garbled_circuit.circuit import load_circuit_from_file
 
 def evaluate_and_gate(wire_a: bytes, wire_b: bytes, gtt_0: bytes, gtt_1: bytes) -> bytes:
     lsb_a = and_bytes(wire_a, b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01', 16)[15]

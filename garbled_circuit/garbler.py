@@ -1,6 +1,6 @@
 from typing import Union
-from common_utils.crypto_utils import get_random_blocks, and_bytes, or_bytes, xor_bytes, hash
-from gc_utils.circuit import load_circuit_from_file
+from common.crypto import get_random_blocks, and_bytes, or_bytes, xor_bytes, hash
+from garbled_circuit.circuit import load_circuit_from_file
 import os
 
 def garbler_init() -> Union[bytes, bytes, bytes, bytes]:
@@ -67,19 +67,16 @@ def compute_garbled_circuit(circuit_file: str, ginput: list, gginput_0: list, gg
             wires[i] = gginput_1[i]
     for i in range(num_of_einput):
         wires[i + num_of_ginput] = geinput_0[i]
-    and_gate_id = 0
     gtt = list()
     for i in range(num_of_gate):
         if gates[4 * i + 3] == 0:
             wires[gates[4 * i + 2]], gtt_0, gtt_1 = garble_and_gate(wires[gates[4 * i]], wires[gates[4 * i + 1]], delta)
             gtt.append(gtt_0)
             gtt.append(gtt_1)
-            and_gate_id += 1
         elif gates[4 * i + 3] == 3:
             wires[gates[4 * i + 2]], gtt_0, gtt_1 = garble_or_gate(wires[gates[4 * i]], wires[gates[4 * i + 1]], delta)
             gtt.append(gtt_0)
             gtt.append(gtt_1)
-            and_gate_id += 1
         elif gates[4 * i + 3] == 1:
             wires[gates[4 * i + 2]] = garble_xor_gate(wires[gates[4 * i]], wires[gates[4 * i + 1]])
         elif gates[4 * i + 3] == 2:

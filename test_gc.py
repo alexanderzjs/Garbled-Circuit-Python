@@ -1,7 +1,7 @@
-from ot_utils.base_ot import *
-from common_utils.conversion_utils import *
-from gc_utils.garbler import *
-from gc_utils.evaluator import *
+from oblivious_transfer.base_ot import *
+from common.conversion import *
+from garbled_circuit.garbler import *
+from garbled_circuit.evaluator import *
 
 circuit_file = "./aes.txt"
 

@@ -1,5 +1,5 @@
-from common_utils.conversion_utils import *
-from ot_utils.base_ot import *
+from common.conversion import *
+from oblivious_transfer.base_ot import *
 
 num_of_ot = 8
 m_0 = [b"fo150jlafjgrj148"] * num_of_ot

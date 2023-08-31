@@ -44,13 +44,10 @@ def get_generator_point() -> list:
     return [secp256k1.G[0], secp256k1.G[1]]
 
 def get_encrypted_mask(password: list, byte_len: int) -> bytes:
-    if byte_len % 16 != 0:
-        raise Exception("Byte length error: " + str(byte_len))
     plaintext = int_to_bytes(0, byte_len)
     x = int_to_bytes(password[0], 32)
     y = int_to_bytes(password[1], 32)
     key = hash(xor_bytes(x, y, 32))[0 : 16]
-    keyHex = bytes_to_hex(key)
     return encrypt(plaintext, key, b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
 
 def get_random_blocks(counter: int, password: bytes, num_of_blocks: int) -> list:

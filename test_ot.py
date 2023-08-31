@@ -2,9 +2,9 @@ from common.conversion import *
 from oblivious_transfer.base_ot import *
 
 num_of_ot = 8
-m_0 = [b"fo150jlafjgrj148"] * num_of_ot
-m_1 = [b"amvjjafljga8451p"] * num_of_ot
-message_len_in_bytes = 16
+m_0 = [b"fo150jlafjgrj1rqr48"] * num_of_ot
+m_1 = [b"amvjjafljga845gad1p"] * num_of_ot
+message_len_in_bytes = len(m_0[0])
 b = [0, 1, 1, 0] * (num_of_ot // 4)
 
 a, A = base_ot_sender_1(num_of_ot)

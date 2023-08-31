@@ -31,12 +31,12 @@ def base_got_sender_2(num_of_ot: int, m_0: list, m_1: list, a: list, A: list, C:
     for i in range(num_of_ot):
         temp_a_C = mul_point_number(C[i], a[i])
         mask_0 = get_encrypted_mask(temp_a_C, message_len_in_bytes)
-        e_0.append(xor_bytes(m_0[i], mask_0, 16))
+        e_0.append(xor_bytes(m_0[i], mask_0, message_len_in_bytes))
         inv_A = inv_point(A[i])
         temp_C_A = add_points(C[i], inv_A)
         temp_a_C_A = mul_point_number(temp_C_A, a[i])
         mask_1 = get_encrypted_mask(temp_a_C_A, message_len_in_bytes)
-        e_1.append(xor_bytes(m_1[i], mask_1, 16))
+        e_1.append(xor_bytes(m_1[i], mask_1, message_len_in_bytes))
     return e_0, e_1
 
 def base_got_receiver_2(num_of_ot: int, b: list, e_0: list, e_1: list, c: list, A: list, message_len_in_bytes: int) -> list:
@@ -45,8 +45,8 @@ def base_got_receiver_2(num_of_ot: int, b: list, e_0: list, e_1: list, c: list, 
         temp_c_A = mul_point_number(A[i], c[i])
         mask_b = get_encrypted_mask(temp_c_A, message_len_in_bytes)
         if b[i] == 0:
-            m_b.append(xor_bytes(e_0[i], mask_b, 16))
+            m_b.append(xor_bytes(e_0[i], mask_b, message_len_in_bytes))
         else:
-            m_b.append(xor_bytes(e_1[i], mask_b, 16))
+            m_b.append(xor_bytes(e_1[i], mask_b, message_len_in_bytes))
     return m_b
 

@@ -1,6 +1,7 @@
 from common.conversion import *
 from common.crypto import *
 
+
 g = get_generator_point()
 
 g_2_add = add_points(g, g)
